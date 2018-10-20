@@ -5,9 +5,9 @@
 using CZG = CubeZoneGame;
 
 CZG::CubeZoneGame() 
-: mRenderwindow(sf::VideoMode(1600, 800), "cube_zone")
+: mRenderWindow(sf::VideoMode(1600, 800), "cube_zone")
 {
-
+    mRenderTexture.create(800, 400);
 }
 
 CZG::~CubeZoneGame() {
@@ -15,37 +15,45 @@ CZG::~CubeZoneGame() {
 }
 
 bool CZG::init() {
-    mRenderwindow.setVerticalSyncEnabled(60);
+    mTex.setTexture(mRenderTexture.getTexture());
+    mTex.scale(sf::Vector2f(2.0, 2.0));
 
+    mRenderWindow.setVerticalSyncEnabled(60);
+    
     addGameObject(new Cube(this));
 }
 
 bool CZG::run() {
-    // The main loop - ends as soon as the mRenderwindow is closed
-    while (mRenderwindow.isOpen()) {
+    // The main loop - ends as soon as the mRenderWindow is closed
+    while (mRenderWindow.isOpen()) {
         // Event processing
         sf::Event event;
-        while (mRenderwindow.pollEvent(event))
+        while (mRenderWindow.pollEvent(event))
         {
-            // Request for closing the mRenderwindow
+            // Request for closing the mRenderWindow
             if (event.type == sf::Event::Closed)
-                mRenderwindow.close();
+                mRenderWindow.close();
 
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape) {
-                    mRenderwindow.close();
+                    mRenderWindow.close();
                 }
             }
         }
-        // Clear the whole mRenderwindow before rendering a new frame
-        mRenderwindow.clear(sf::Color::Black);
+        // Clear the whole mRenderWindow before rendering a new frame
+        mRenderWindow.clear(sf::Color::Magenta);
+        mRenderTexture.clear(sf::Color::Black);
 
         for (auto Obj : mDrawableGameObjects) {
-            mRenderwindow.draw(*Obj);
+            mRenderTexture.draw(*Obj);
         }
 
         // End the current frame and display its contents on screen
-        mRenderwindow.display();
+        mRenderTexture.display();
+
+        mRenderWindow.draw(mTex);
+
+        mRenderWindow.display();
     }
 }
 

@@ -21,7 +21,9 @@ class CubeZoneGame {
 
         bool addGameObject(GameObject* obj);
     private:
-        sf::RenderWindow mRenderwindow;
+        sf::RenderWindow mRenderWindow;
+        sf::RenderTexture mRenderTexture;
+        sf::Sprite mTex;
         std::vector<std::shared_ptr<GameObject>> mGameObjects;
         std::vector<std::shared_ptr<DrawableGameObject>> mDrawableGameObjects;
 };
