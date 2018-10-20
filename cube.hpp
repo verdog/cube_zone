@@ -23,4 +23,5 @@ class Cube : public DrawableGameObject {
         sf::Vector2f mVelocity;
         sf::Color mColor;
         int mX, mY;
+        bool keyDown;
 };

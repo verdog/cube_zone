@@ -19,6 +19,8 @@ Cube::Cube(CubeZoneGame *game)
     mRect.setFillColor(mColor);
 
     mVelocity = sf::Vector2f(0, 0);
+
+    keyDown = false;
 }
 
 Cube::~Cube() {
@@ -45,20 +47,26 @@ void Cube::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 void Cube::handleInput() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        move(0, -1);
-    }
+    if (!keyDown) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            move(0, -1);
+            keyDown = true;
+        }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        move(-1, 0);
-    }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            move(-1, 0);
+            keyDown = true;
+        }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        move(0, 1);
-    }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            move(0, 1);
+            keyDown = true;
+        }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        move(1, 0);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            move(1, 0);
+            keyDown = true;
+        }
     }
 
     if (
@@ -68,19 +76,10 @@ void Cube::handleInput() {
         !sf::Keyboard::isKeyPressed(sf::Keyboard::D)
     ) {
         mVelocity = sf::Vector2f(0, 0);
+        keyDown = false;
     }
 }
 
 void Cube::update() {
     mRect.setPosition(sf::Vector2f(mX * 16, mY * 16));
-    if (mVelocity.x != 0) {
-        mRect.setOrigin(0, -8);
-        mRect.setScale(1, 0.50);
-    } else if (mVelocity.y != 0) {
-        mRect.setOrigin(-8, 0);
-        mRect.setScale(0.50, 1);
-    } else {
-        mRect.setOrigin(0, 0);
-        mRect.setScale(1, 1);
-    }
 }
