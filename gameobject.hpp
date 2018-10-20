@@ -9,6 +9,9 @@ class GameObject {
         GameObject(CubeZoneGame *game);
         virtual ~GameObject();
 
+        virtual void handleInput() = 0;
+        virtual void update() = 0;
+
         CubeZoneGame* getGame();
     private:
         CubeZoneGame* mGame;

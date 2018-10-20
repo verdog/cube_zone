@@ -40,6 +40,12 @@ bool CZG::run() {
                 }
             }
         }
+
+        for (auto Obj : mGameObjects) {
+            Obj->handleInput();
+            Obj->update();
+        }
+
         // Clear the whole mRenderWindow before rendering a new frame
         mRenderWindow.clear(sf::Color::Magenta);
         mRenderTexture.clear(sf::Color::Black);
