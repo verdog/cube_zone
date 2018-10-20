@@ -1,9 +1,11 @@
 #include "game.hpp"
+#include "gameobject.hpp"
+#include "cube.hpp"
 
 using CZG = CubeZoneGame;
 
 CZG::CubeZoneGame() 
-: mRenderwindow(sf::VideoMode(800, 600), "cube_zone")
+: mRenderwindow(sf::VideoMode(1600, 800), "cube_zone")
 {
 
 }
@@ -15,6 +17,7 @@ CZG::~CubeZoneGame() {
 bool CZG::init() {
     mRenderwindow.setVerticalSyncEnabled(60);
 
+    addGameObject(new Cube(this));
 }
 
 bool CZG::run() {
@@ -35,8 +38,24 @@ bool CZG::run() {
             }
         }
         // Clear the whole mRenderwindow before rendering a new frame
-        mRenderwindow.clear(sf::Color::Red);
+        mRenderwindow.clear(sf::Color::Black);
+
+        for (auto Obj : mDrawableGameObjects) {
+            mRenderwindow.draw(*Obj);
+        }
+
         // End the current frame and display its contents on screen
         mRenderwindow.display();
+    }
+}
+
+bool CZG::addGameObject(GameObject* obj) {
+    auto ptr = std::shared_ptr<GameObject>(obj);
+    mGameObjects.push_back(ptr);
+
+    auto drawable = std::dynamic_pointer_cast<DrawableGameObject>(ptr);
+
+    if (drawable != nullptr) {
+        mDrawableGameObjects.push_back(drawable);
     }
 }
