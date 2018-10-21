@@ -5,9 +5,9 @@
 
 using CZG = CubeZoneGame;
 
-CZG::CubeZoneGame() 
+CZG::CubeZoneGame(sf::IpAddress ip, unsigned short port) 
 : mRenderWindow(sf::VideoMode(128 * 4, 128 * 4), "cube_zone")
-, mRemoteServer("localhost", 3001)
+, mRemoteServer(ip, port)
 {
     mRenderTexture.create(128, 128);
 }

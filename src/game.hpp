@@ -15,7 +15,7 @@ class CubeZoneGame {
     friend class GameObject;
     friend class Cube;
     public:
-        CubeZoneGame();
+        CubeZoneGame(sf::IpAddress ip, unsigned short port);
         ~CubeZoneGame();
 
         bool init();

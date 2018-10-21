@@ -8,7 +8,7 @@
 
 class CubeZoneGameServer {
     public:
-        CubeZoneGameServer();
+        CubeZoneGameServer(unsigned short port);
         ~CubeZoneGameServer();
 
         void init();

@@ -6,9 +6,9 @@
 
 using CZGS = CubeZoneGameServer;
 
-CZGS::CubeZoneGameServer() {
-    mPort = 3001;
-    mNextId = 1;
+CZGS::CubeZoneGameServer(short unsigned port)
+: mPort {port}
+{
 }
 
 CZGS::~CubeZoneGameServer() = default;
