@@ -10,10 +10,13 @@ class RemoteServer {
     public:
         RemoteServer(sf::IpAddress ip, unsigned short port);
 
+        bool isConnected();
+
         void setCube(Cube* cube);
         void setMap(std::map<unsigned int, std::shared_ptr<Cube>>* map);
 
         void connect();
+        void tick();
 
         void sendUpdate();
         void getUpdate();
@@ -29,6 +32,8 @@ class RemoteServer {
 
         Cube* mCube;
         std::map<unsigned int, std::shared_ptr<Cube>>* mCubeMap;
+
+        bool mConnected;
 
         void getId();
 };

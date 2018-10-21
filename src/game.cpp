@@ -6,10 +6,10 @@
 using CZG = CubeZoneGame;
 
 CZG::CubeZoneGame() 
-: mRenderWindow(sf::VideoMode(800, 400), "cube_zone")
+: mRenderWindow(sf::VideoMode(128 * 4, 128 * 4), "cube_zone")
 , mRemoteServer("localhost", 3001)
 {
-    mRenderTexture.create(800, 400);
+    mRenderTexture.create(128, 128);
 }
 
 CZG::~CubeZoneGame() {
@@ -18,7 +18,7 @@ CZG::~CubeZoneGame() {
 
 bool CZG::init() {
     mTex.setTexture(mRenderTexture.getTexture());
-    // mTex.scale(sf::Vector2f(2.0, 2.0));
+    mTex.scale(sf::Vector2f(4.0, 4.0));
 
     mRenderWindow.setVerticalSyncEnabled(60);
     
@@ -29,6 +29,11 @@ bool CZG::init() {
 }
 
 bool CZG::run() {
+    float tTime, dTime;
+    dTime = tTime = 0;
+    
+    sf::Clock clock;
+
     while (mRenderWindow.isOpen()) {
         // Event processing
         sf::Event event;
@@ -49,9 +54,10 @@ bool CZG::run() {
             }
         }
 
-        if (!mRenderWindow.hasFocus()) {
-            continue;
-        }
+        // update dtime
+        tTime += clock.getElapsedTime().asSeconds();
+        dTime += clock.getElapsedTime().asSeconds();
+        clock.restart();
 
         for (auto Obj : mGameObjects) {
             Obj->handleInput();
@@ -64,6 +70,13 @@ bool CZG::run() {
 
         for (auto Obj : mDrawableGameObjects) {
             mRenderTexture.draw(*Obj);
+        }
+
+        // update network?
+        if (mRemoteServer.isConnected() && dTime > 1/10.f) {
+            std::cout << "Tick at " << tTime << std::endl;
+            mRemoteServer.tick();
+            dTime = 0;
         }
 
         for (auto pair : mNetworkCubes) {

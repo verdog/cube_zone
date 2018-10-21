@@ -12,7 +12,8 @@
 #include "remoteserver.hpp"
 
 class CubeZoneGame {
-    friend GameObject;
+    friend class GameObject;
+    friend class Cube;
     public:
         CubeZoneGame();
         ~CubeZoneGame();

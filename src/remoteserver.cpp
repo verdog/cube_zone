@@ -7,7 +7,12 @@ RemoteServer::RemoteServer(sf::IpAddress ip, unsigned short port)
 , mPort {port}
 , mCube {nullptr}
 , mId {0}
+, mConnected {false}
 {}
+
+bool RemoteServer::isConnected() {
+    return mConnected;
+}
 
 void RemoteServer::setCube(Cube* cube) {
     mCube = cube;
@@ -19,6 +24,12 @@ void RemoteServer::setMap(std::map<unsigned int, std::shared_ptr<Cube>>* map) {
 
 void RemoteServer::connect() {
     getId();
+    sendUpdate();
+    getUpdate();
+    mConnected = true;
+}
+
+void RemoteServer::tick() {
     sendUpdate();
     getUpdate();
 }

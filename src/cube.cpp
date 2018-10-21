@@ -1,4 +1,5 @@
 #include "cube.hpp"
+#include "game.hpp"
 
 Cube::Cube(CubeZoneGame *game) 
 : DrawableGameObject(game)
@@ -8,8 +9,8 @@ Cube::Cube(CubeZoneGame *game)
 
     srand(time(nullptr));
 
-    mX = rand() % 50;
-    mY = rand() % 25;
+    mX = rand() % 8;
+    mY = rand() % 8;
 
     mColor = sf::Color(
         rand() % 256,
@@ -28,30 +29,30 @@ Cube::~Cube() {
 }
 
 void Cube::move(int x, int y) {
-    mX = (mX + x) % 50;
-    mY = (mY + y) % 25;
+    mX = (mX + x) % 8;
+    mY = (mY + y) % 8;
     
     while (mX < 0) {
-        mX += 50;
+        mX += 8;
     }
 
     while (mY < 0) {
-        mY += 25;
+        mY += 8;
     }
 
     mVelocity = sf::Vector2f(x, y);
 }
 
 void Cube::setPosition(int x, int y) {
-    mX = (x) % 50;
-    mY = (y) % 25;
+    mX = (x) % 8;
+    mY = (y) % 8;
 
     while (mX < 0) {
-        mX += 50;
+        mX += 8;
     }
 
     while (mY < 0) {
-        mY += 25;
+        mY += 8;
     }
 }
 
@@ -73,7 +74,7 @@ void Cube::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 void Cube::handleInput() {
-    if (!keyDown) {
+    if (!keyDown && mGame->mRenderWindow.hasFocus()) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             move(0, -1);
             keyDown = true;

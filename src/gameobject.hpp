@@ -13,7 +13,7 @@ class GameObject {
         virtual void update() = 0;
 
         CubeZoneGame* getGame();
-    private:
+    protected:
         CubeZoneGame* mGame;
 };
 
