@@ -80,7 +80,7 @@ void CZGS::sendUpdate(sf::IpAddress from, unsigned short port) {
     for (auto pair : mCubeMap) {
         ServerCube& cube = pair.second;
         updatePacket << sf::Uint64(pair.first); // id
-        updatePacket << sf::Uint64(cube.getPosition().x) << sf::Uint64(cube.getPosition().y);
+        updatePacket << sf::Int64(cube.getPosition().x) << sf::Int64(cube.getPosition().y);
         sf::Color c = cube.getColor();
         updatePacket << sf::Uint8(c.r) << sf::Uint8(c.g) << sf::Uint8(c.b);
         std::cout << "Added cube (" << pair.first << ") to update packet.\n";

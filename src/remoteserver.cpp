@@ -113,12 +113,15 @@ void RemoteServer::getUpdate() {
 
         std::cout << "Recieved " << n << " cubes.\n";
 
-        int x, y;
+        sf::Int64 x, y;
         sf::Uint8 r, g, b;
 
         for (int i = 0; i < n; i++) {
-            unsigned int id;
-            mPacket >> id;
+            sf::Uint64 nid;
+            mPacket >> nid;
+            std::cout << "Updating cube " << nid << "\n";
+
+            unsigned int id = nid;
 
             if (id == mId) {
                 // don't do anything with my cube
