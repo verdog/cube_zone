@@ -25,5 +25,5 @@ class CubeZoneGameServer {
         sf::Packet mDataPacket;
 
         std::map<unsigned int, ServerCube> mCubeMap;
-        unsigned int mNextId;
+        sf::Uint64 mNextId;
 };

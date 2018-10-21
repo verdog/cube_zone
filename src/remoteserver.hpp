@@ -28,7 +28,7 @@ class RemoteServer {
         unsigned short mReceivePort;
         sf::IpAddress mIp;
         sf::IpAddress mReceiveIp;
-        unsigned int mId;
+        sf::Uint64 mId;
 
         Cube* mCube;
         std::map<unsigned int, std::shared_ptr<Cube>>* mCubeMap;

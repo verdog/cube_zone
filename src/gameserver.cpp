@@ -1,4 +1,4 @@
-#include <iostream>
+    #include <iostream>
 #include <map>
 
 #include "gameserver.hpp"
@@ -8,6 +8,7 @@ using CZGS = CubeZoneGameServer;
 
 CZGS::CubeZoneGameServer(short unsigned port)
 : mPort {port}
+, mNextId {1}
 {
 }
 
@@ -78,10 +79,10 @@ void CZGS::sendUpdate(sf::IpAddress from, unsigned short port) {
 
     for (auto pair : mCubeMap) {
         ServerCube& cube = pair.second;
-        updatePacket << pair.first; // id
-        updatePacket << cube.getPosition().x << cube.getPosition().y;
+        updatePacket << sf::Uint64(pair.first); // id
+        updatePacket << sf::Uint64(cube.getPosition().x) << sf::Uint64(cube.getPosition().y);
         sf::Color c = cube.getColor();
-        updatePacket << c.r << c.g << c.b;
+        updatePacket << sf::Uint8(c.r) << sf::Uint8(c.g) << sf::Uint8(c.b);
         std::cout << "Added cube (" << pair.first << ") to update packet.\n";
     }
 
@@ -93,7 +94,7 @@ void CZGS::sendUpdate(sf::IpAddress from, unsigned short port) {
 void CZGS::updateCube(sf::Packet p, sf::IpAddress from, unsigned short port) {
     std::cout << "Updating cube...\n";
 
-    unsigned int cubeId;
+    sf::Uint64 cubeId;
 
     p >> cubeId;
 

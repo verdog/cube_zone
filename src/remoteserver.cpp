@@ -8,7 +8,8 @@ RemoteServer::RemoteServer(sf::IpAddress ip, unsigned short port)
 , mCube {nullptr}
 , mId {0}
 , mConnected {false}
-{}
+{
+}
 
 bool RemoteServer::isConnected() {
     return mConnected;
@@ -24,9 +25,10 @@ void RemoteServer::setMap(std::map<unsigned int, std::shared_ptr<Cube>>* map) {
 
 void RemoteServer::connect() {
     getId();
-    sendUpdate();
-    getUpdate();
-    mConnected = true;
+    if (mId != 0) {
+        mConnected = true;
+        mSocket.setBlocking(false);
+    }
 }
 
 void RemoteServer::tick() {
@@ -81,9 +83,30 @@ void RemoteServer::getUpdate() {
 
         std::cout << "Sent request for game update.\n";
 
-        mSocket.receive(mPacket, mReceiveIp, mReceivePort);
+        sf::Socket::Status s = mSocket.receive(mPacket, mReceiveIp, mReceivePort);
 
-        std::cout << "Received update packet\n";
+        if (s != sf::Socket::Done) {
+            std::cout << "Error receiving game update: ";
+
+            switch (s) {
+                case sf::Socket::NotReady:
+                    std::cout << "Not Ready";
+                    break;
+                case sf::Socket::Partial:
+                    std::cout << "Partial";
+                    break;
+                case sf::Socket::Disconnected:
+                    std::cout << "Diconnected";
+                    break;
+                case sf::Socket::Error:
+                    std::cout << "Error";
+                    break;
+            }
+
+            std::cout << "\n";
+
+            return;
+        }
 
         sf::Int64 n;
         mPacket >> n; // number of cubes
