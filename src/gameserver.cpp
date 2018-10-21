@@ -51,6 +51,8 @@ void CZGS::processPacket(sf::Packet p, sf::IpAddress from, unsigned short port) 
         updateCube(p, from, port);
     } else if (purposeString == "getupdate") {
         sendUpdate(from, port);
+    } else if (purposeString == "disconnect") {
+        disconnect(p, from, port);
     } else {
         std::cout << "Error!\n";
     }
@@ -111,4 +113,15 @@ void CZGS::updateCube(sf::Packet p, sf::IpAddress from, unsigned short port) {
     } else {
         std::cout << "Didn't find a cube with ID: " << cubeId << std::endl;
     }
+}
+
+void CZGS::disconnect(sf::Packet p, sf::IpAddress from, unsigned short port) {
+    sf::Uint64 nid;
+    p >> nid;
+
+    unsigned int id = nid;
+
+    mCubeMap.erase(id);
+
+    std::cout << "Erased cube " << id << std::endl;
 }

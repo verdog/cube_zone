@@ -19,6 +19,7 @@ class CubeZoneGameServer {
         void sendId(sf::IpAddress from, unsigned short port);
         void sendUpdate(sf::IpAddress from, unsigned short port);
         void updateCube(sf::Packet p, sf::IpAddress from, unsigned short port);
+        void disconnect(sf::Packet p, sf::IpAddress from, unsigned short port);
     private:
         unsigned short mPort;
         sf::UdpSocket mListenSocket;

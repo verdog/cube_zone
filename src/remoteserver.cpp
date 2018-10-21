@@ -142,6 +142,30 @@ void RemoteServer::getUpdate() {
 
             mPacket >> r >> g >> b;
             cube.setColor(sf::Color(r, g, b));
+
+            // cube is alive. update time to live.
+            cube.resetTimeToLive();
+        }
+
+        // delete any disconnected cubes
+        for (auto pair : *mCubeMap) {
+            Cube& cube = *pair.second;
+            cube.decrementTimeToLive();
+
+            if (cube.getTimeToLive() < 0) {
+                mCubeMap->erase(pair.first);
+                std::cout << "Deleted cube with id " << pair.first << "\n";
+            }
         }
     }
+}
+
+void RemoteServer::disconnect() {
+    mPacket.clear();
+
+    mPacket << "disconnect" << mId;
+
+    mSocket.send(mPacket, mIp, mPort);
+
+    mConnected = false;
 }

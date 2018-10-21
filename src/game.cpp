@@ -93,6 +93,10 @@ bool CZG::run() {
 
         mRenderWindow.display();
     }
+
+    // clean up
+    std::cout << "Disconnecting.\n";
+    mRemoteServer.disconnect();
 }
 
 bool CZG::addGameObject(GameObject* obj) {

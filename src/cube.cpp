@@ -22,10 +22,24 @@ Cube::Cube(CubeZoneGame *game)
     mVelocity = sf::Vector2f(0, 0);
 
     keyDown = false;
+
+    resetTimeToLive();
 }
 
 Cube::~Cube() {
 
+}
+
+void Cube::resetTimeToLive() {
+    mTimeToLive = 3;
+}
+
+void Cube::decrementTimeToLive() {
+    mTimeToLive--;
+}
+
+int Cube::getTimeToLive() {
+    return mTimeToLive;
 }
 
 void Cube::move(int x, int y) {

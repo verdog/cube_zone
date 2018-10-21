@@ -18,6 +18,10 @@ class Cube : public DrawableGameObject {
         void setColor(sf::Color c);
         sf::Color getColor();
 
+        void resetTimeToLive();
+        void decrementTimeToLive();
+        int getTimeToLive();
+
         void handleInput();
         void update();
 
@@ -26,6 +30,6 @@ class Cube : public DrawableGameObject {
         sf::RectangleShape mRect;
         sf::Vector2f mVelocity;
         sf::Color mColor;
-        int mX, mY;
+        int mX, mY, mTimeToLive;
         bool keyDown;
 };
