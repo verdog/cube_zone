@@ -3,10 +3,10 @@ OBJS = $(SRCS:../src/%.cpp=../obj/%.o)
 LIBS = -lsfml-system -lsfml-window -lsfml-graphics -lsfml-network
 
 all: $(OBJS)
-	g++ -g -I../src main.cpp $(OBJS) -o cube_zone_server $(LIBS)
+	g++ -g -I../src main.cpp $(OBJS) -o probe $(LIBS)
 
 ../obj/%.o: ../src/%.cpp
 	g++ -g -c -I../src -o $@ $<
 
 clean:
-	rm *.o ../obj/*.o cube_zone_server
+	rm *.o ../obj/*.o probe

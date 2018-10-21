@@ -42,6 +42,32 @@ void Cube::move(int x, int y) {
     mVelocity = sf::Vector2f(x, y);
 }
 
+void Cube::setPosition(int x, int y) {
+    mX = (x) % 50;
+    mY = (y) % 25;
+
+    while (mX < 0) {
+        mX += 50;
+    }
+
+    while (mY < 0) {
+        mY += 25;
+    }
+}
+
+sf::Vector2i Cube::getPosition() {
+    return sf::Vector2i(mX, mY);
+}
+
+void Cube::setColor(sf::Color c) {
+    mRect.setFillColor(c);
+    mColor = c;
+}
+
+sf::Color Cube::getColor() {
+    return mColor;
+}
+
 void Cube::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(mRect);
 }

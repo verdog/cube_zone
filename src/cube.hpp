@@ -13,12 +13,16 @@ class Cube : public DrawableGameObject {
         ~Cube() noexcept;
 
         void move(int x, int y);
+        void setPosition(int x, int y);
+        sf::Vector2i getPosition();
+        void setColor(sf::Color c);
+        sf::Color getColor();
 
         void handleInput();
         void update();
 
         void draw(sf::RenderTarget &target, sf::RenderStates) const;
-    private:
+    protected:
         sf::RectangleShape mRect;
         sf::Vector2f mVelocity;
         sf::Color mColor;

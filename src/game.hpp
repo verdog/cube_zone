@@ -9,6 +9,7 @@
 #include <SFML/Network.hpp>
 
 #include "gameobject.hpp"
+#include "remoteserver.hpp"
 
 class CubeZoneGame {
     friend GameObject;
@@ -26,4 +27,6 @@ class CubeZoneGame {
         sf::Sprite mTex;
         std::vector<std::shared_ptr<GameObject>> mGameObjects;
         std::vector<std::shared_ptr<DrawableGameObject>> mDrawableGameObjects;
+        std::map<unsigned int, std::shared_ptr<Cube>> mNetworkCubes;
+        RemoteServer mRemoteServer;
 };
